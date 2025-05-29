@@ -9,7 +9,8 @@
 					:content="post.content"
 					:created-at="post.createdAt"
 					@click="goPage(post.id)"
-				></PostItem>
+				>
+				</PostItem>
 			</div>
 		</div>
 		<hr class="my-4" />
@@ -30,8 +31,13 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 const posts = ref([]);
 
-const fetchPosts = () => {
-	posts.value = getPosts();
+const fetchPosts = async () => {
+	try {
+		const { data } = await getPosts();
+		posts.value = data;
+	} catch (error) {
+		console.log(error);
+	}
 };
 fetchPosts();
 
